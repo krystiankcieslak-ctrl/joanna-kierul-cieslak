@@ -126,5 +126,92 @@
 
   html {
     @apply font-sans;
+    scroll-behavior: smooth;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+}
+
+@layer utilities {
+  @media (hover: hover) and (pointer: fine) {
+    .card-interactive {
+      transition:
+        transform 250ms ease-out,
+        box-shadow 250ms ease-out;
+    }
+
+    .card-interactive:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-card-hover);
+    }
+
+    .card-icon-hover {
+      transition: transform 200ms ease-out;
+    }
+
+    .group:hover .card-icon-hover,
+    .card-interactive:hover .card-icon-hover {
+      transform: scale(1.08);
+    }
+
+    .portrait-zoom {
+      transition: transform 280ms ease-out;
+    }
+
+    .group:hover .portrait-zoom {
+      transform: scale(1.015);
+    }
+
+    .btn-primary-hover {
+      transition:
+        transform 200ms ease-out,
+        box-shadow 200ms ease-out,
+        background-color 200ms ease-out;
+    }
+
+    .btn-primary-hover:hover {
+      transform: translateY(-1px);
+      background-color: color-mix(in oklab, var(--primary) 88%, white);
+      box-shadow: 0 4px 14px rgba(24, 49, 83, 0.15);
+    }
+
+    .btn-primary-hover:active {
+      transform: translateY(0);
+    }
+
+    .btn-secondary-hover:hover {
+      border-color: color-mix(in oklab, var(--primary) 30%, transparent);
+      background-color: var(--secondary);
+    }
+
+    .nav-link-hover:hover {
+      color: var(--primary);
+    }
+
+    .nav-link-hover:hover::after {
+      transform: scaleX(1);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .card-interactive,
+    .card-icon-hover,
+    .portrait-zoom,
+    .btn-primary-hover {
+      transition: none;
+    }
+
+    .card-interactive:hover,
+    .group:hover .card-icon-hover,
+    .card-interactive:hover .card-icon-hover,
+    .group:hover .portrait-zoom,
+    .btn-primary-hover:hover,
+    .btn-primary-hover:active {
+      transform: none;
+    }
   }
 }

@@ -1,4 +1,5 @@
 import { AudienceCard } from "@/components/sections/audience-card";
+import { MotionReveal } from "@/components/motion-reveal";
 import { Container } from "@/components/ui/container";
 import { Heading } from "@/components/ui/heading";
 import { Section } from "@/components/ui/section";
@@ -13,7 +14,7 @@ function Audience() {
       spacing="default"
     >
       <Container>
-        <div className={sectionIntro}>
+        <MotionReveal className={sectionIntro}>
           <Heading id="audience-heading" level="h2">
             Komu pomagam?
           </Heading>
@@ -21,20 +22,22 @@ function Audience() {
             Wspieram uczniów, nauczycieli i osoby rozwijające kompetencje
             językowe. Wybierz obszar, który Cię interesuje.
           </p>
-        </div>
+        </MotionReveal>
 
-        <ul className="grid grid-cols-1 gap-4 sm:gap-5 md:grid-cols-2 lg:grid-cols-3">
-          {audienceGroups.map((group) => (
-            <li key={group.id} className="h-full">
-              <AudienceCard
-                id={group.id}
-                title={group.title}
-                description={group.description}
-                href={group.href}
-              />
-            </li>
-          ))}
-        </ul>
+        <MotionReveal>
+          <ul className="grid grid-cols-1 gap-3 sm:gap-4 md:grid-cols-2 lg:grid-cols-3">
+            {audienceGroups.map((group) => (
+              <li key={group.id} className="h-full">
+                <AudienceCard
+                  id={group.id}
+                  title={group.title}
+                  description={group.description}
+                  href={group.href}
+                />
+              </li>
+            ))}
+          </ul>
+        </MotionReveal>
       </Container>
     </Section>
   );

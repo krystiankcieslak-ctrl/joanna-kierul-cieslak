@@ -1,3 +1,3 @@
 /** Custom React hooks. */
 
-export {};
+export { useCountUp, parseStatValue } from "@/hooks/use-count-up";

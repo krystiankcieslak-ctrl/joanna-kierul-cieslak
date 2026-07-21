@@ -1,22 +1,15 @@
 "use client";
 
-import { motion, useReducedMotion } from "framer-motion";
-
+import { MotionReveal } from "@/components/motion-reveal";
 import { sectionStack } from "@/constants/layout";
 import { aboutTimeline } from "@/constants/about";
-import { getRevealMotion } from "@/lib/get-reveal-motion";
-import { useFinePointer } from "@/lib/use-fine-pointer";
 
 function AboutTimeline() {
-  const prefersReducedMotion = useReducedMotion();
-  const shouldAnimate = useFinePointer();
-  const motionProps = getRevealMotion({ prefersReducedMotion, shouldAnimate });
-
   return (
-    <motion.div className={sectionStack} {...motionProps}>
+    <MotionReveal className={sectionStack}>
       <ol
         aria-label="Kluczowe etapy kariery"
-        className="grid grid-cols-1 gap-8 border-t border-accent/30 pt-8 sm:grid-cols-2 sm:gap-x-6 lg:grid-cols-4 lg:gap-6 lg:pt-10"
+        className="grid grid-cols-1 gap-6 border-t border-accent/30 pt-6 sm:grid-cols-2 sm:gap-x-5 lg:grid-cols-4 lg:gap-5 lg:pt-8"
       >
         {aboutTimeline.map((milestone) => (
           <li
@@ -36,7 +29,7 @@ function AboutTimeline() {
           </li>
         ))}
       </ol>
-    </motion.div>
+    </MotionReveal>
   );
 }
 

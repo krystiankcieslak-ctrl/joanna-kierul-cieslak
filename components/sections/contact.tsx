@@ -10,7 +10,7 @@ import {
 import Link from "next/link";
 import type { FormEvent } from "react";
 
-import { MotionReveal } from "@/components/sections/about-values";
+import { MotionReveal } from "@/components/motion-reveal";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { Card, CardHeader, CardTitle } from "@/components/ui/card";
 import { Container } from "@/components/ui/container";
@@ -31,6 +31,7 @@ import {
   contactIntro,
   contactSubtitle,
 } from "@/constants/contact";
+import { cardInteractiveClass, formFieldClass } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 
 const contactIcons: Record<(typeof contactDetails)[number]["id"], LucideIcon> =
@@ -42,12 +43,12 @@ const contactIcons: Record<(typeof contactDetails)[number]["id"], LucideIcon> =
   };
 
 const fieldClassName = cn(
-  "flex w-full rounded-xl border border-border/40 bg-background px-4 text-base text-foreground outline-none transition-colors duration-200",
+  "flex w-full rounded-xl border border-border/40 bg-background px-4 text-base text-foreground outline-none",
   "placeholder:text-muted-foreground",
-  "focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50",
+  formFieldClass,
 );
 
-const inputClassName = cn(fieldClassName, "h-11");
+const inputClassName = cn(fieldClassName, "h-10");
 
 function ContactForm() {
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
@@ -58,7 +59,7 @@ function ContactForm() {
   const { fields, submitLabel, title } = contactForm;
 
   return (
-    <Card className="gap-5" whileHover={{ y: 0 }}>
+    <Card className="gap-4">
       <CardHeader className="gap-1 p-0">
         <CardTitle>{title}</CardTitle>
       </CardHeader>
@@ -66,11 +67,11 @@ function ContactForm() {
       <form
         noValidate
         onSubmit={handleSubmit}
-        className="flex flex-col gap-4"
+        className="flex flex-col gap-3"
         aria-label="Formularz kontaktowy"
       >
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-          <div className="flex flex-col gap-1.5">
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+          <div className="flex flex-col gap-1">
             <label htmlFor="contact-name" className="text-sm font-medium text-foreground">
               {fields.name.label}
             </label>
@@ -84,7 +85,7 @@ function ContactForm() {
             />
           </div>
 
-          <div className="flex flex-col gap-1.5">
+          <div className="flex flex-col gap-1">
             <label htmlFor="contact-email" className="text-sm font-medium text-foreground">
               {fields.email.label}
             </label>
@@ -99,7 +100,7 @@ function ContactForm() {
           </div>
         </div>
 
-        <div className="flex flex-col gap-1.5">
+        <div className="flex flex-col gap-1">
           <label htmlFor="contact-phone" className="text-sm font-medium text-foreground">
             {fields.phone.label}
             <span className="font-normal text-muted-foreground"> (opcjonalnie)</span>
@@ -114,7 +115,7 @@ function ContactForm() {
           />
         </div>
 
-        <div className="flex flex-col gap-1.5">
+        <div className="flex flex-col gap-1">
           <label htmlFor="contact-subject" className="text-sm font-medium text-foreground">
             {fields.subject.label}
           </label>
@@ -128,7 +129,7 @@ function ContactForm() {
           />
         </div>
 
-        <div className="flex flex-col gap-1.5">
+        <div className="flex flex-col gap-1">
           <label htmlFor="contact-message" className="text-sm font-medium text-foreground">
             {fields.message.label}
           </label>
@@ -136,8 +137,8 @@ function ContactForm() {
             id="contact-message"
             name={fields.message.name}
             required={fields.message.required}
-            rows={4}
-            className={cn(fieldClassName, "min-h-[120px] resize-y py-3 leading-relaxed")}
+            rows={3}
+            className={cn(fieldClassName, "min-h-[96px] resize-y py-2.5 leading-relaxed")}
           />
         </div>
 
@@ -163,7 +164,7 @@ function Contact() {
     >
       <Container>
         <div className={twoColumnGrid}>
-          <MotionReveal className="flex flex-col gap-6">
+          <MotionReveal className="flex flex-col gap-4">
             <Heading id="contact-heading" level="h2" className="max-w-lg">
               {contactHeading}
             </Heading>
@@ -174,7 +175,7 @@ function Contact() {
               {contactIntro}
             </p>
 
-            <ul className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4">
+            <ul className="grid grid-cols-1 gap-2.5 sm:grid-cols-2 sm:gap-3">
               {contactDetails.map((item) => {
                 const Icon = contactIcons[item.id];
                 const content = (
@@ -194,8 +195,9 @@ function Contact() {
                 );
 
                 const itemClassName = cn(
-                  "flex h-full items-start gap-3 rounded-2xl bg-card p-5 shadow-(--shadow-card)",
+                  "flex h-full items-start gap-3 rounded-2xl bg-card p-4 shadow-(--shadow-card)",
                   cardSurface,
+                  cardInteractiveClass,
                 );
 
                 return (
@@ -205,7 +207,7 @@ function Contact() {
                         href={item.href}
                         className={cn(
                           itemClassName,
-                          "outline-none transition-shadow duration-200 hover:shadow-(--shadow-card-hover) focus-visible:ring-3 focus-visible:ring-ring/50",
+                          "outline-none focus-visible:ring-3 focus-visible:ring-ring/50",
                         )}
                       >
                         {content}
@@ -218,7 +220,7 @@ function Contact() {
               })}
             </ul>
 
-            <Card className="gap-4 border-accent/25 bg-accent/5">
+            <Card className="gap-3 border-accent/25 bg-accent/5">
               <p className="font-heading text-lg font-semibold tracking-tight text-primary">
                 {contactHighlight.title}
               </p>

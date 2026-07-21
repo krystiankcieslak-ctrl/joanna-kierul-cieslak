@@ -1,4 +1,5 @@
-import { Card, CardContent } from "@/components/ui/card";
+import { StatisticValue } from "@/components/sections/statistic-value";
+import { MotionReveal } from "@/components/motion-reveal";
 import { Container } from "@/components/ui/container";
 import { Heading } from "@/components/ui/heading";
 import { Section } from "@/components/ui/section";
@@ -14,7 +15,7 @@ function Statistics() {
       className="bg-secondary/40"
     >
       <Container>
-        <div className={sectionIntro}>
+        <MotionReveal className={sectionIntro}>
           <Heading id="statistics-heading" level="h2">
             Doświadczenie, które buduje zaufanie
           </Heading>
@@ -22,27 +23,17 @@ function Statistics() {
             Ponad trzy dekady pracy w edukacji — od egzaminatora po doradcę
             metodycznego.
           </p>
-        </div>
+        </MotionReveal>
 
-        <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 xl:grid-cols-4">
-          {statistics.map((item) => (
-            <li key={item.label}>
-              <Card className="h-full gap-0">
-                <CardContent className="flex flex-col gap-1.5 p-0">
-                  <p className="font-heading text-5xl font-bold tracking-tight text-primary tabular-nums sm:text-6xl">
-                    {item.value}
-                  </p>
-                  <p className="text-xs leading-snug text-muted-foreground sm:text-sm">
-                    {item.label}
-                  </p>
-                  <span className="sr-only">
-                    {item.value} {item.label}
-                  </span>
-                </CardContent>
-              </Card>
-            </li>
-          ))}
-        </ul>
+        <MotionReveal>
+          <ul className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4 xl:grid-cols-4">
+            {statistics.map((item) => (
+              <li key={item.label}>
+                <StatisticValue value={item.value} label={item.label} />
+              </li>
+            ))}
+          </ul>
+        </MotionReveal>
       </Container>
     </Section>
   );

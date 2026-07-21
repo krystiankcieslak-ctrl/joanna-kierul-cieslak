@@ -1,8 +1,8 @@
 "use client";
 
 import { Check } from "lucide-react";
-import { motion, useReducedMotion } from "framer-motion";
 
+import { MotionReveal } from "@/components/motion-reveal";
 import {
   Card,
   CardDescription,
@@ -11,36 +11,8 @@ import {
 } from "@/components/ui/card";
 import { sectionStack } from "@/constants/layout";
 import { aboutValues } from "@/constants/about";
-import { getRevealMotion } from "@/lib/get-reveal-motion";
-import { useFinePointer } from "@/lib/use-fine-pointer";
+import { cardIconHoverClass } from "@/lib/motion";
 import { cn } from "@/lib/utils";
-import type { ReactNode } from "react";
-
-type MotionRevealProps = {
-  children: ReactNode;
-  className?: string;
-  delay?: number;
-};
-
-function MotionReveal({ children, className, delay = 0 }: MotionRevealProps) {
-  const prefersReducedMotion = useReducedMotion();
-  const shouldAnimate = useFinePointer();
-  const motionProps = getRevealMotion({
-    prefersReducedMotion,
-    shouldAnimate,
-    delay,
-  });
-
-  if (prefersReducedMotion || !shouldAnimate) {
-    return <div className={className}>{children}</div>;
-  }
-
-  return (
-    <motion.div className={className} {...motionProps}>
-      {children}
-    </motion.div>
-  );
-}
 
 function AboutValues() {
   return (
@@ -51,7 +23,7 @@ function AboutValues() {
             <Card className="h-full">
               <CardHeader className="gap-2">
                 <div className="flex items-start gap-3">
-                  <span aria-hidden="true" className="mt-0.5 flex size-5 shrink-0 items-center justify-center rounded-full bg-accent/15">
+                  <span aria-hidden="true" className={cn("mt-0.5 flex size-5 shrink-0 items-center justify-center rounded-full bg-accent/15", cardIconHoverClass)}>
                     <Check className="size-3 text-accent" strokeWidth={2.5} />
                   </span>
                   <CardTitle>{value.title}</CardTitle>
@@ -66,4 +38,4 @@ function AboutValues() {
   );
 }
 
-export { AboutValues, MotionReveal };
+export { AboutValues };

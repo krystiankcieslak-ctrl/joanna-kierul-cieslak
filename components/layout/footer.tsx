@@ -55,8 +55,8 @@ function Footer() {
 
   return (
     <footer className="border-t border-border/40 bg-secondary/30">
-      <Container className="py-14 md:py-16 lg:py-20">
-        <div className="grid grid-cols-1 gap-10 text-center sm:grid-cols-2 sm:text-left lg:grid-cols-4 lg:gap-8 xl:gap-12">
+      <Container className="py-10 md:py-12 lg:py-14">
+        <div className="grid grid-cols-1 gap-8 text-center sm:grid-cols-2 sm:text-left lg:grid-cols-4 lg:gap-6 xl:gap-8">
           <FooterColumn title="Joanna Kierul-Cieślak" className="sm:col-span-2 lg:col-span-1">
             <Link
               href="/"
@@ -122,7 +122,7 @@ function Footer() {
           </FooterColumn>
         </div>
 
-        <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-border/40 pt-8 text-center text-sm text-muted-foreground sm:flex-row sm:text-left">
+        <div className="mt-8 flex flex-col items-center justify-between gap-3 border-t border-border/40 pt-6 text-center text-sm text-muted-foreground sm:flex-row sm:text-left">
           <p>
             © {year} Joanna Kierul-Cieślak. Wszelkie prawa zastrzeżone.
           </p>

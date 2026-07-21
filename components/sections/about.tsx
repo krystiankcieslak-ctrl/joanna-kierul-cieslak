@@ -1,9 +1,7 @@
 import { HeroPortrait } from "@/components/sections/hero-portrait";
 import { AboutTimeline } from "@/components/sections/about-timeline";
-import {
-  AboutValues,
-  MotionReveal,
-} from "@/components/sections/about-values";
+import { AboutValues } from "@/components/sections/about-values";
+import { MotionReveal } from "@/components/motion-reveal";
 import { Card } from "@/components/ui/card";
 import { Container } from "@/components/ui/container";
 import { Heading } from "@/components/ui/heading";
@@ -33,7 +31,7 @@ function About() {
             "lg:grid-cols-[minmax(0,0.45fr)_minmax(0,0.55fr)]",
           )}
         >
-          <MotionReveal className="order-1 flex flex-col gap-6">
+          <MotionReveal className="order-1 flex flex-col gap-4">
             <HeroPortrait
               src={heroPortraitSrc}
               className="mx-auto w-full max-w-[520px] lg:mx-0"
@@ -50,7 +48,7 @@ function About() {
           </MotionReveal>
 
           <MotionReveal
-            className="order-2 flex flex-col gap-6"
+            className="order-2 flex flex-col gap-4"
             delay={0.05}
           >
             <div className={badge}>{aboutBadge}</div>
@@ -59,7 +57,7 @@ function About() {
               {aboutHeading}
             </Heading>
 
-            <div className="flex max-w-xl flex-col gap-4">
+            <div className="flex max-w-xl flex-col gap-3">
               {aboutStory.map((paragraph) => (
                 <p key={paragraph.slice(0, 32)} className={bodyText}>
                   {paragraph}

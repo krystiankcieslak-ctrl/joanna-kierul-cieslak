@@ -7,7 +7,8 @@ import { useCallback, useEffect, useId, useState } from "react";
 
 import { Button, buttonVariants } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
-import { ctaLink, navLinks } from "@/constants/navigation";
+import { ctaLink, mobileNavLinks, navLinks } from "@/constants/navigation";
+import { navLinkActiveClass, navLinkClass } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 
 function Navbar() {
@@ -15,6 +16,7 @@ function Navbar() {
   const prefersReducedMotion = useReducedMotion();
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [activeHref, setActiveHref] = useState<string | null>(null);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 16);
@@ -33,14 +35,43 @@ function Navbar() {
     };
   }, [mobileOpen]);
 
+  useEffect(() => {
+    const sectionHrefs = [...navLinks.map((link) => link.href), ctaLink.href];
+    const sectionIds = sectionHrefs.map((href) => href.slice(1));
+    const sections = sectionIds
+      .map((id) => document.getElementById(id))
+      .filter((el): el is HTMLElement => el !== null);
+
+    if (sections.length === 0) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
+
+        if (visible[0]?.target.id) {
+          setActiveHref(`#${visible[0].target.id}`);
+        }
+      },
+      { rootMargin: "-40% 0px -45% 0px", threshold: [0, 0.25, 0.5] },
+    );
+
+    for (const section of sections) {
+      observer.observe(section);
+    }
+
+    return () => observer.disconnect();
+  }, []);
+
   const closeMobile = useCallback(() => setMobileOpen(false), []);
 
   return (
     <header
       className={cn(
-        "sticky top-0 z-50 transition-[background-color,box-shadow,border-color] duration-300",
+        "sticky top-0 z-50 transition-[background-color,box-shadow,border-color] duration-[250ms] ease-out",
         scrolled
-          ? "border-b border-border/60 bg-background/85 shadow-sm backdrop-blur-md supports-[backdrop-filter]:bg-background/75"
+          ? "border-b border-border/60 bg-background/95 shadow-sm backdrop-blur-md supports-[backdrop-filter]:bg-background/90"
           : "border-b border-transparent bg-transparent",
       )}
     >
@@ -70,7 +101,12 @@ function Navbar() {
               <li key={link.href}>
                 <Link
                   href={link.href}
-                  className="rounded-lg px-3 py-2 text-sm font-medium text-foreground/80 transition-colors hover:text-primary focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
+                  aria-current={activeHref === link.href ? "true" : undefined}
+                  className={cn(
+                    "rounded-lg px-3 py-2 outline-none focus-visible:ring-3 focus-visible:ring-ring/50",
+                    navLinkClass,
+                    activeHref === link.href && navLinkActiveClass,
+                  )}
                 >
                   {link.label}
                 </Link>
@@ -128,28 +164,22 @@ function Navbar() {
           >
             <Container className="px-5 py-5 sm:px-6">
               <ul className="flex flex-col gap-1.5">
-                {navLinks.map((link) => (
+                {mobileNavLinks.map((link) => (
                   <li key={link.href}>
                     <Link
                       href={link.href}
                       onClick={closeMobile}
-                      className="block rounded-xl px-3 py-3 text-base font-medium text-foreground transition-colors hover:bg-muted focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
+                      aria-current={activeHref === link.href ? "true" : undefined}
+                      className={cn(
+                        "block rounded-xl px-3 py-3 text-base font-medium text-foreground transition-colors duration-[220ms] hover:bg-muted focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-ring/50",
+                        activeHref === link.href && "bg-muted/60 text-primary",
+                      )}
                     >
                       {link.label}
                     </Link>
                   </li>
                 ))}
               </ul>
-              <Link
-                href={ctaLink.href}
-                onClick={closeMobile}
-                className={cn(
-                  buttonVariants({ variant: "primary" }),
-                  "mt-4 w-full",
-                )}
-              >
-                {ctaLink.label}
-              </Link>
             </Container>
           </motion.div>
         ) : null}

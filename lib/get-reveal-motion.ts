@@ -8,7 +8,6 @@ import {
 
 type RevealMotionOptions = {
   prefersReducedMotion: boolean | null;
-  shouldAnimate: boolean;
   delay?: number;
 };
 
@@ -22,14 +21,10 @@ type RevealMotionResult = {
 
 function getRevealMotion({
   prefersReducedMotion,
-  shouldAnimate,
   delay = 0,
 }: RevealMotionOptions): RevealMotionResult {
-  if (prefersReducedMotion || !shouldAnimate) {
-    return {
-      initial: false,
-      animate: { opacity: 1, y: 0 },
-    };
+  if (prefersReducedMotion) {
+    return { initial: false };
   }
 
   return {

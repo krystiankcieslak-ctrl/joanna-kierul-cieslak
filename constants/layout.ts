@@ -1,17 +1,17 @@
 /** Shared layout class strings for consistent spacing and rhythm. */
 
 export const sectionIntro =
-  "mx-auto mb-12 max-w-2xl text-center md:mb-16";
+  "mx-auto mb-8 max-w-2xl text-center md:mb-10";
 
 export const sectionSubtitle =
-  "mt-4 text-base leading-relaxed text-muted-foreground md:text-lg";
+  "mt-3 text-base leading-relaxed text-muted-foreground md:mt-4 md:text-lg";
 
-export const sectionStack = "mt-16 md:mt-20 lg:mt-24";
+export const sectionStack = "mt-10 md:mt-12 lg:mt-14";
 
 export const twoColumnGrid =
-  "grid items-start gap-10 lg:grid-cols-2 lg:gap-16 xl:gap-20";
+  "grid items-start gap-8 lg:grid-cols-2 lg:gap-12 xl:gap-16";
 
-export const cardPadding = "p-6 sm:p-7";
+export const cardPadding = "p-5 sm:p-6";
 
 export const cardSurface = "border border-border/40";
 

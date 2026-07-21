@@ -1,4 +1,5 @@
 import { OfferItem } from "@/components/sections/offer-item";
+import { MotionReveal } from "@/components/motion-reveal";
 import { Container } from "@/components/ui/container";
 import { Heading } from "@/components/ui/heading";
 import { Section } from "@/components/ui/section";
@@ -13,16 +14,16 @@ function Offer() {
       spacing="default"
     >
       <Container>
-        <div className={sectionIntro}>
+        <MotionReveal className={sectionIntro}>
           <Heading id="offer-heading" level="h2">
             Oferta
           </Heading>
           <p className={sectionSubtitle}>
             Wybierz formę wsparcia najlepiej dopasowaną do Twoich potrzeb.
           </p>
-        </div>
+        </MotionReveal>
 
-        <div className="flex flex-col gap-16 md:gap-20 lg:gap-24">
+        <div className="flex flex-col gap-12 md:gap-14 lg:gap-16">
           {offers.map((offer, index) => (
             <OfferItem
               key={offer.id}

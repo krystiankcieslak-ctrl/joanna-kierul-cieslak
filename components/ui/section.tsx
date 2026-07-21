@@ -15,8 +15,8 @@ function Section({
     <section
       data-slot="section"
       className={cn(
-        spacing === "default" && "py-16 md:py-24 lg:py-32",
-        spacing === "compact" && "py-12 md:py-16",
+        spacing === "default" && "py-14 md:py-20 lg:py-24",
+        spacing === "compact" && "py-10 md:py-12",
         className,
       )}
       {...props}

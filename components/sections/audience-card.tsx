@@ -20,6 +20,7 @@ import {
 } from "@/components/ui/card";
 import { iconSize, iconWrap } from "@/constants/layout";
 import type { AudienceGroupId } from "@/constants/audience";
+import { cardIconHoverClass } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 
 const audienceIcons: Record<AudienceGroupId, LucideIcon> = {
@@ -45,19 +46,8 @@ function AudienceCard({ id, title, description, href }: AudienceCardProps) {
       href={href}
       className="group block h-full rounded-2xl outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
     >
-      <Card
-        className={cn(
-          "h-full transition-colors duration-200",
-          "group-hover:border-accent/40 group-hover:shadow-(--shadow-card-hover)",
-        )}
-      >
-        <div
-          aria-hidden="true"
-          className={cn(
-            iconWrap,
-            "transition-colors duration-200 group-hover:bg-accent/15",
-          )}
-        >
+      <Card className="h-full">
+        <div aria-hidden="true" className={cn(iconWrap, cardIconHoverClass)}>
           <Icon className={iconSize} strokeWidth={1.75} />
         </div>
 
@@ -67,11 +57,11 @@ function AudienceCard({ id, title, description, href }: AudienceCardProps) {
         </CardHeader>
 
         <CardFooter className="mt-auto border-0 p-0 pt-0">
-          <span className="inline-flex items-center gap-2 text-sm font-medium text-primary transition-colors duration-200 group-hover:text-accent">
+          <span className="inline-flex items-center gap-2 text-sm font-medium text-primary">
             Zobacz ofertę
             <ArrowRight
               aria-hidden="true"
-              className="size-4 transition-transform duration-200 group-hover:translate-x-1"
+              className="size-4 transition-transform duration-200 ease-out group-hover:translate-x-1"
             />
           </span>
         </CardFooter>

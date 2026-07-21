@@ -1,24 +1,22 @@
-"use client";
-
 import * as React from "react";
-import { motion } from "framer-motion";
 
-import { cardHoverMotion, cardHoverTransitionClass } from "@/lib/motion";
+import {
+  cardInteractiveClass,
+  microTransitionClass,
+} from "@/lib/motion";
 import { cn } from "@/lib/utils";
 import { cardPadding, cardSurface } from "@/constants/layout";
 
-function Card({ className, ...props }: React.ComponentProps<typeof motion.div>) {
+function Card({ className, ...props }: React.ComponentProps<"div">) {
   return (
-    <motion.div
+    <div
       data-slot="card"
-      initial={false}
-      whileHover={cardHoverMotion}
       className={cn(
-        "flex flex-col gap-5 overflow-hidden rounded-2xl bg-card text-card-foreground shadow-(--shadow-card)",
+        "flex flex-col gap-4 overflow-hidden rounded-2xl bg-card text-card-foreground shadow-(--shadow-card)",
         cardSurface,
         cardPadding,
-        "transition-shadow hover:shadow-(--shadow-card-hover)",
-        cardHoverTransitionClass,
+        microTransitionClass,
+        cardInteractiveClass,
         className,
       )}
       {...props}

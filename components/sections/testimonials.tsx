@@ -1,8 +1,9 @@
 "use client";
 
 import { Star } from "lucide-react";
+import { motion, useReducedMotion } from "framer-motion";
 
-import { MotionReveal } from "@/components/sections/about-values";
+import { MotionReveal } from "@/components/motion-reveal";
 import {
   Card,
   CardDescription,
@@ -19,6 +20,12 @@ import {
   testimonialsHeading,
   testimonialsSubtitle,
 } from "@/constants/testimonials";
+import {
+  motionDurationReveal,
+  motionEase,
+  motionRevealOffset,
+  staggerDelay,
+} from "@/lib/motion";
 import { cn } from "@/lib/utils";
 
 function StarRating() {
@@ -38,7 +45,18 @@ function StarRating() {
   );
 }
 
+const cardVariants = {
+  hidden: { opacity: 0, y: motionRevealOffset },
+  show: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: motionDurationReveal, ease: motionEase },
+  },
+};
+
 function Testimonials() {
+  const prefersReducedMotion = useReducedMotion();
+
   return (
     <Section
       id="opinie"
@@ -47,25 +65,24 @@ function Testimonials() {
       className="scroll-mt-24"
     >
       <Container>
-        <div className={sectionIntro}>
+        <MotionReveal className={sectionIntro}>
           <Heading id="testimonials-heading" level="h2">
             {testimonialsHeading}
           </Heading>
           <p className={sectionSubtitle}>{testimonialsSubtitle}</p>
-        </div>
+        </MotionReveal>
 
-        <MotionReveal>
-          <ul className="grid grid-cols-1 gap-4 sm:gap-5 md:grid-cols-2">
+        {prefersReducedMotion ? (
+          <ul className="grid grid-cols-1 gap-3 sm:gap-4 md:grid-cols-2">
             {testimonials.map((item) => (
               <li key={item.id} className="h-full">
                 <Card className="h-full">
-                  <CardHeader className="gap-4">
+                  <CardHeader className="gap-3">
                     <StarRating />
                     <CardDescription className="max-w-prose text-base leading-relaxed text-foreground">
                       &ldquo;{item.text}&rdquo;
                     </CardDescription>
                   </CardHeader>
-
                   <CardFooter className="mt-auto items-end justify-between gap-3 border-0 p-0 pt-0">
                     <div className="flex min-w-0 flex-col gap-0.5">
                       <p className="font-heading text-base font-semibold text-foreground">
@@ -75,7 +92,6 @@ function Testimonials() {
                         {item.category}
                       </p>
                     </div>
-
                     {item.badge ? (
                       <span className="shrink-0 rounded-full border border-accent/25 bg-accent/10 px-3 py-1 text-xs font-medium text-primary">
                         {item.badge}
@@ -86,14 +102,57 @@ function Testimonials() {
               </li>
             ))}
           </ul>
-        </MotionReveal>
+        ) : (
+          <motion.ul
+            className="grid grid-cols-1 gap-3 sm:gap-4 md:grid-cols-2"
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true, amount: 0.15, margin: "0px 0px -5% 0px" }}
+            variants={{
+              hidden: {},
+              show: { transition: { staggerChildren: staggerDelay } },
+            }}
+          >
+            {testimonials.map((item) => (
+              <motion.li
+                key={item.id}
+                className="h-full"
+                variants={cardVariants}
+              >
+                <Card className="h-full">
+                  <CardHeader className="gap-3">
+                    <StarRating />
+                    <CardDescription className="max-w-prose text-base leading-relaxed text-foreground">
+                      &ldquo;{item.text}&rdquo;
+                    </CardDescription>
+                  </CardHeader>
+                  <CardFooter className="mt-auto items-end justify-between gap-3 border-0 p-0 pt-0">
+                    <div className="flex min-w-0 flex-col gap-0.5">
+                      <p className="font-heading text-base font-semibold text-foreground">
+                        {item.name}
+                      </p>
+                      <p className="text-sm text-muted-foreground">
+                        {item.category}
+                      </p>
+                    </div>
+                    {item.badge ? (
+                      <span className="shrink-0 rounded-full border border-accent/25 bg-accent/10 px-3 py-1 text-xs font-medium text-primary">
+                        {item.badge}
+                      </span>
+                    ) : null}
+                  </CardFooter>
+                </Card>
+              </motion.li>
+            ))}
+          </motion.ul>
+        )}
 
         <MotionReveal className={sectionStack}>
           <div
             aria-label="Kluczowe wskaźniki zaufania"
             className={cn(
-              "grid grid-cols-1 gap-6 rounded-2xl bg-secondary/30 px-6 py-8",
-              "sm:grid-cols-2 lg:grid-cols-4 lg:gap-8 lg:px-8 lg:py-9",
+              "grid grid-cols-1 gap-4 rounded-2xl bg-secondary/30 px-5 py-6",
+              "sm:grid-cols-2 lg:grid-cols-4 lg:gap-6 lg:px-6 lg:py-7",
             )}
           >
             {testimonialTrustMetrics.map((metric) => (
