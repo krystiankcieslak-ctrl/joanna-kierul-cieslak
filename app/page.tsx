@@ -2,6 +2,7 @@ import { Footer } from "@/components/layout/footer";
 import { Navbar } from "@/components/layout/navbar";
 import { About } from "@/components/sections/about";
 import { Audience } from "@/components/sections/audience";
+import { Certificates } from "@/components/sections/certificates";
 import { Contact } from "@/components/sections/contact";
 import { Faq } from "@/components/sections/faq";
 import { Hero } from "@/components/sections/hero";
@@ -25,6 +26,7 @@ export default function Home() {
         <Audience />
         <Offer />
         <About />
+        <Certificates />
         <Testimonials />
         <Contact />
         <Faq />

@@ -5,8 +5,10 @@ import { Heading } from "@/components/ui/heading";
 import { Section } from "@/components/ui/section";
 import { sectionIntro, sectionSubtitle } from "@/constants/layout";
 import { offers } from "@/constants/offer";
+import { getOfferImagesById } from "@/lib/offer-images";
 
 function Offer() {
+  const offerImagesById = getOfferImagesById();
   return (
     <Section
       id="oferta"
@@ -23,12 +25,14 @@ function Offer() {
           </p>
         </MotionReveal>
 
-        <div className="flex flex-col gap-12 md:gap-14 lg:gap-16">
+        <div className="flex flex-col gap-14 md:gap-16 lg:gap-20">
           {offers.map((offer, index) => (
             <OfferItem
               key={offer.id}
               {...offer}
+              image={offerImagesById[offer.id]}
               reversed={index % 2 === 1}
+              index={index}
             />
           ))}
         </div>
