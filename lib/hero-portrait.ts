@@ -1,7 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 
-const PORTRAIT_BASENAME = "joanna-kierul-cieslak";
+const PORTRAIT_BASENAME = "joanna-kierul-cieslak1";
 const EXTENSIONS = [".jpg", ".jpeg", ".png", ".webp"] as const;
 
 function resolveHeroPortraitSrc(): string {

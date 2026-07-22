@@ -5,7 +5,7 @@ import { Section } from "@/components/ui/section";
 import { twoColumnGrid } from "@/constants/layout";
 import { cn } from "@/lib/utils";
 
-const heroPortraitSrc = "/images/joanna-kierul-cieslak.jpg";
+const heroPortraitSrc = "/images/joanna-kierul-cieslak1.jpg";
 
 function Hero() {
   return (
