@@ -6,11 +6,6 @@ const EXTENSIONS = [".jpg", ".jpeg", ".png", ".webp"] as const;
 
 function resolveAboutPortraitSrc(): string {
   const directory = path.join(process.cwd(), "public", "images");
-  const extensionlessPath = path.join(directory, PORTRAIT_BASENAME);
-
-  if (fs.existsSync(extensionlessPath) && fs.statSync(extensionlessPath).isFile()) {
-    return `/images/${PORTRAIT_BASENAME}`;
-  }
 
   for (const extension of EXTENSIONS) {
     const filename = `${PORTRAIT_BASENAME}${extension}`;
@@ -21,7 +16,7 @@ function resolveAboutPortraitSrc(): string {
   }
 
   throw new Error(
-    `Portrait not found: public/images/${PORTRAIT_BASENAME} or ${PORTRAIT_BASENAME}.{jpg,jpeg,png,webp}`,
+    `Portrait not found: public/images/${PORTRAIT_BASENAME}.{jpg,jpeg,png,webp}`,
   );
 }
 
