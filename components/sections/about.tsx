@@ -13,7 +13,7 @@ import {
   aboutQuote,
   aboutStory,
 } from "@/constants/about";
-import { heroPortraitSrc } from "@/lib/hero-portrait";
+import { aboutPortraitSrc } from "@/lib/about-portrait";
 import { cn } from "@/lib/utils";
 
 function About() {
@@ -33,7 +33,7 @@ function About() {
         >
           <MotionReveal className="order-1 flex flex-col gap-4">
             <HeroPortrait
-              src={heroPortraitSrc}
+              src={aboutPortraitSrc}
               className="mx-auto w-full max-w-[520px] lg:mx-0"
             />
 

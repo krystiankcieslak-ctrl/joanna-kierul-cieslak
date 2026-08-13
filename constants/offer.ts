@@ -21,7 +21,7 @@ export const offers: readonly OfferBlock[] = [
     bullets: [
       "Przygotowanie do matury podstawowej",
       "Przygotowanie do matury rozszerzonej",
-      "Egzaminy ósmoklasisty",
+      "Egzamin ósmoklasisty",
       "Rozwijanie kompetencji językowych",
       "Indywidualny plan nauki",
     ],

@@ -10,19 +10,19 @@ export const contactDetails = [
   {
     id: "phone",
     label: "Telefon",
-    value: "+48 000 000 000",
-    href: "tel:+48000000000",
+    value: "+48 507 248 868",
+    href: "tel:+48507248868",
   },
   {
     id: "email",
     label: "E-mail",
-    value: "kontakt@joannakierulcieslak.pl",
-    href: "mailto:kontakt@joannakierulcieslak.pl",
+    value: "joannakierulcieslak@gmail.com",
+    href: "mailto:joannakierulcieslak@gmail.com",
   },
   {
     id: "location",
     label: "Lokalizacja",
-    value: "Wrocław / Online",
+    value: "Słupsk / Online",
   },
   {
     id: "response",

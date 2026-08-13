@@ -31,7 +31,7 @@ export const audienceGroups = [
     id: "instytucje",
     title: "Instytucje edukacyjne",
     description:
-      "Szkolenia, warsztaty i współpraca z placówkami oświatowymi w zakresie kompetencji językowych.",
+      "Szkolenia, warsztaty i współpraca z placówkami oświatowymi w zakresie kompetencji humanistycznych",
     href: "#oferta-instytucje",
   },
 ] as const;
