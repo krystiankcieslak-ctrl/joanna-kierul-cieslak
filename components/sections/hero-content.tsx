@@ -75,9 +75,10 @@ function HeroContent() {
 
       <motion.div variants={itemVariants}>
         <p className="max-w-xl text-base leading-relaxed text-pretty text-muted-foreground md:text-lg md:leading-relaxed">
-          Wspieram w nauce języka polskiego, przygotowaniu do matury i rozwoju
-          kariery zawodowej — z indywidualnym podejściem, empatią i wiedzą opartą
-          na dekadach praktyki w szkole i egzaminatorstwie.
+          Prowadzę korepetycje z języka polskiego, przygotowuję do matury
+          i egzaminu ósmoklasisty oraz wspieram nauczycieli w rozwoju zawodowym —
+          w Słupsku i online, z wiedzą opartą na dekadach praktyki w szkole
+          i egzaminatorstwie.
         </p>
       </motion.div>
 

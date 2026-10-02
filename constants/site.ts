@@ -8,9 +8,9 @@
 
 export const siteConfig = {
   name: "Joanna Kierul-Cieślak",
-  title: "Joanna Kierul-Cieślak | Ekspert edukacyjny",
+  title: "Korepetycje z polskiego i matura – Słupsk i online | Joanna Kierul-Cieślak",
   description:
-    "Joanna Kierul-Cieślak — ekspert edukacyjny z 35-letnim doświadczeniem. Wsparcie dla rodziców, uczniów i nauczycieli: egzaminator, doradca metodyczny. Słupsk i online.",
+    "Korepetycje z języka polskiego, przygotowanie do matury i egzaminu ósmoklasisty, język polski jako obcy i szkolenia dla nauczycieli. Słupsk i online.",
   url: (process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.joannakierulcieslak.pl").replace(/\/$/, ""),
   locale: "pl_PL",
   city: "Słupsk",

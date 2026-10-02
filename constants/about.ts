@@ -10,7 +10,7 @@ export const aboutHeading = "Doświadczenie, które od lat pomaga osiągać cele
 export const aboutStory = [
   "Od ponad trzech dekad związana jestem z edukacją — najpierw jako nauczycielka, dziś jako ekspertka, która towarzyszy uczniom i nauczycielom w momentach, gdy liczy się każde słowo wsparcia i każda decyzja.",
   "Jako egzaminator maturalny i doradca metodyczny widziałam setki historii — pełnych nadziei i tych naznaczonych wątpliwościami. Wiem, że za każdym wynikiem stoi człowiek, a nie tylko ocena.",
-  "Pracuję z uczniami i nauczycielami. Jednym pomagam odnaleźć własną drogę do wiedzy, innych wspieram w rozwoju zawodowym — zawsze w oparciu o indywidualne potrzeby i realne doświadczenie szkolne.",
+  "Pracuję z uczniami i nauczycielami — w Słupsku i online. Jednym pomagam odnaleźć własną drogę do wiedzy, innych wspieram w rozwoju zawodowym — zawsze w oparciu o indywidualne potrzeby i realne doświadczenie szkolne.",
   "Wierzę, że dobra edukacja to połączenie wiedzy z empatią. Uczę z pasją do języka polskiego, dbając o to, by każdy czuł się wysłuchany — i pewny, że stać go na więcej, niż mu się wydaje.",
 ] as const;
 
