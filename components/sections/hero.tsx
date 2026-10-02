@@ -13,12 +13,14 @@ function Hero() {
       id="hero"
       aria-labelledby="hero-heading"
       spacing="default"
-      className="pt-6 md:pt-8 lg:pt-10"
+      className="relative isolate overflow-hidden pt-6 md:pt-8 lg:pt-10"
     >
+      <div aria-hidden="true" className="hero-backdrop absolute inset-0 -z-10" />
+      <div aria-hidden="true" className="hero-grid absolute inset-0 -z-10" />
       <Container>
         <div className={cn(twoColumnGrid, "items-center")}>
           <HeroContent />
-          <HeroPortrait src={heroPortraitSrc} />
+          <HeroPortrait src={heroPortraitSrc} priority />
         </div>
       </Container>
     </Section>

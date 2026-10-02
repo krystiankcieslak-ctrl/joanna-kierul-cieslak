@@ -22,7 +22,7 @@ function About() {
       id="o-mnie"
       aria-labelledby="about-heading"
       spacing="default"
-      className="scroll-mt-24 bg-secondary/20"
+      className="bg-secondary/20"
     >
       <Container>
         <div

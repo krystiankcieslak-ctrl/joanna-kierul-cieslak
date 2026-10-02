@@ -15,18 +15,26 @@ import { cn } from "@/lib/utils";
 type HeroPortraitProps = {
   src: string;
   className?: string;
+  /** Tylko dla zdjęcia widocznego od razu (hero) — przyspiesza LCP. */
+  priority?: boolean;
+  alt?: string;
 };
 
-function HeroPortrait({ src, className }: HeroPortraitProps) {
+function HeroPortrait({
+  src,
+  className,
+  priority = false,
+  alt = heroPortraitAlt,
+}: HeroPortraitProps) {
   const prefersReducedMotion = useReducedMotion();
 
   const imageBlock = (
     <div className="relative aspect-[4/3] w-full overflow-hidden rounded-[20px] border border-border/40 shadow-(--shadow-card) lg:aspect-[3/4]">
       <Image
         src={src}
-        alt={heroPortraitAlt}
+        alt={alt}
         fill
-        priority
+        priority={priority}
         sizes="(max-width: 1024px) 100vw, 520px"
         className={cn(
           "object-cover object-[center_22%] lg:object-[center_18%]",

@@ -1,6 +1,8 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Manrope } from "next/font/google";
 import "./globals.css";
+
+import { siteConfig } from "@/constants/site";
 
 const manrope = Manrope({
   variable: "--font-manrope",
@@ -9,12 +11,18 @@ const manrope = Manrope({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(siteConfig.url),
   title: {
-    default: "Joanna Kierul-Cieślak | Ekspert edukacyjny",
+    default: siteConfig.title,
     template: "%s | Joanna Kierul-Cieślak",
   },
-  description:
-    "Joanna Kierul-Cieślak — ekspert edukacyjny z 35-letnim doświadczeniem. Wsparcie dla rodziców, uczniów i nauczycieli: egzaminator, doradca metodyczny.",
+  description: siteConfig.description,
+  applicationName: siteConfig.name,
+  authors: [{ name: siteConfig.name }],
+  creator: siteConfig.name,
+  alternates: {
+    canonical: "/",
+  },
   keywords: [
     "Joanna Kierul-Cieślak",
     "ekspert edukacyjny",
@@ -24,12 +32,33 @@ export const metadata: Metadata = {
     "nauka języka polskiego",
   ],
   openGraph: {
-    title: "Joanna Kierul-Cieślak | Ekspert edukacyjny",
+    title: siteConfig.title,
     description:
       "Profesjonalne wsparcie edukacyjne oparte na 35 latach doświadczenia.",
-    locale: "pl_PL",
+    url: "/",
+    siteName: siteConfig.name,
+    locale: siteConfig.locale,
     type: "website",
   },
+  twitter: {
+    card: "summary_large_image",
+    title: siteConfig.title,
+    description:
+      "Profesjonalne wsparcie edukacyjne oparte na 35 latach doświadczenia.",
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
+  formatDetection: {
+    telephone: true,
+    email: true,
+  },
+};
+
+export const viewport: Viewport = {
+  themeColor: "#fafaf8",
+  colorScheme: "light",
 };
 
 export default function RootLayout({
@@ -38,7 +67,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="pl" className={`${manrope.variable} h-full antialiased`}>
+    <html
+      lang="pl"
+      data-scroll-behavior="smooth"
+      className={`${manrope.variable} h-full antialiased`}
+    >
       <body className="min-h-full flex flex-col">{children}</body>
     </html>
   );

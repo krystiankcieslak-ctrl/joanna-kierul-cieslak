@@ -127,12 +127,47 @@
   html {
     @apply font-sans;
     scroll-behavior: smooth;
+    /* Kotwice (#oferta, #kontakt…) nie chowają się pod przyklejonym menu. */
+    scroll-padding-top: 5rem;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  ::selection {
+    background-color: color-mix(in oklab, var(--accent) 35%, transparent);
+    color: var(--primary);
   }
 
   @media (prefers-reduced-motion: reduce) {
     html {
       scroll-behavior: auto;
     }
+  }
+}
+
+@layer components {
+  /* Subtelna poświata w tle sekcji hero — w kolorach marki. */
+  .hero-backdrop {
+    background:
+      radial-gradient(
+        42rem 30rem at 86% 30%,
+        color-mix(in oklab, var(--accent) 16%, transparent),
+        transparent 70%
+      ),
+      radial-gradient(
+        36rem 26rem at -6% 92%,
+        color-mix(in oklab, var(--primary) 7%, transparent),
+        transparent 70%
+      );
+    mask-image: linear-gradient(to bottom, transparent, black 7rem);
+  }
+
+  .hero-grid {
+    background-image: radial-gradient(
+      color-mix(in oklab, var(--primary) 9%, transparent) 1px,
+      transparent 1px
+    );
+    background-size: 22px 22px;
+    mask-image: radial-gradient(ellipse 60% 55% at 30% 40%, black, transparent 75%);
   }
 }
 
@@ -184,8 +219,12 @@
     }
 
     .btn-secondary-hover:hover {
-      border-color: color-mix(in oklab, var(--primary) 30%, transparent);
+      border-color: color-mix(in oklab, var(--primary) 45%, transparent);
       background-color: var(--secondary);
+    }
+
+    .btn-secondary-hover:hover svg {
+      transform: translateX(3px);
     }
 
     .nav-link-hover:hover {

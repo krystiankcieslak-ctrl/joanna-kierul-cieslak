@@ -74,9 +74,13 @@ function CertificateStatTile({
   }
 
   return (
-    <Card className="h-full gap-0 p-4 sm:p-5">
+    <Card className="relative h-full gap-0 p-4 sm:p-5">
+      <span
+        aria-hidden="true"
+        className="absolute top-0 left-4 h-0.5 w-8 rounded-full bg-accent sm:left-5"
+      />
       <CardContent className="flex flex-col gap-1.5 p-0">
-        <p className="font-heading text-5xl font-bold tracking-tight text-primary sm:text-6xl">
+        <p className="flex h-10 items-end font-heading text-2xl font-bold tracking-tight text-primary sm:h-12 sm:text-3xl xl:h-15 xl:text-4xl">
           {value}
         </p>
         <p className="text-xs leading-snug text-muted-foreground sm:text-sm">
@@ -133,13 +137,20 @@ function CertificateLightbox({
 }) {
   const prefersReducedMotion = useReducedMotion();
   const image = images[activeIndex];
+  const dialogRef = useRef<HTMLDivElement>(null);
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
+  const touchStartX = useRef<number | null>(null);
 
   useEffect(() => {
     const previousOverflow = document.body.style.overflow;
+    const previouslyFocused = document.activeElement as HTMLElement | null;
     document.body.style.overflow = "hidden";
+    closeButtonRef.current?.focus({ preventScroll: true });
 
     return () => {
       document.body.style.overflow = previousOverflow;
+      // Po zamknięciu wracamy do miniatury, którą otwarto.
+      previouslyFocused?.focus?.({ preventScroll: true });
     };
   }, []);
 
@@ -156,6 +167,23 @@ function CertificateLightbox({
       if (event.key === "ArrowRight") {
         onNext();
       }
+
+      // Prosta pułapka fokusu — Tab nie ucieka poza okno podglądu.
+      if (event.key === "Tab" && dialogRef.current) {
+        const focusable = dialogRef.current.querySelectorAll<HTMLElement>(
+          "button:not([disabled])",
+        );
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+
+        if (event.shiftKey && document.activeElement === first) {
+          event.preventDefault();
+          last?.focus();
+        } else if (!event.shiftKey && document.activeElement === last) {
+          event.preventDefault();
+          first?.focus();
+        }
+      }
     };
 
     window.addEventListener("keydown", handleKeyDown);
@@ -170,8 +198,12 @@ function CertificateLightbox({
     ? { duration: 0 }
     : { duration: motionDurationPanel, ease: motionEase };
 
+  const navButtonClass =
+    "absolute z-10 flex size-10 items-center justify-center rounded-full border border-white/15 bg-white/10 text-white backdrop-blur-sm transition-colors duration-200 ease-out hover:bg-white/20 focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-white/40 sm:size-11";
+
   return (
     <motion.div
+      ref={dialogRef}
       className="fixed inset-0 z-100 flex items-center justify-center p-4 sm:p-6"
       role="dialog"
       aria-modal="true"
@@ -180,19 +212,40 @@ function CertificateLightbox({
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       transition={transition}
+      onTouchStart={(event) => {
+        touchStartX.current = event.touches[0]?.clientX ?? null;
+      }}
+      onTouchEnd={(event) => {
+        const start = touchStartX.current;
+        const end = event.changedTouches[0]?.clientX;
+        touchStartX.current = null;
+
+        if (start === null || end === undefined) return;
+        const delta = end - start;
+
+        if (Math.abs(delta) > 50) {
+          if (delta > 0) {
+            onPrevious();
+          } else {
+            onNext();
+          }
+        }
+      }}
     >
       <button
         type="button"
-        aria-label="Zamknij podgląd"
-        className="absolute inset-0 bg-primary/90 backdrop-blur-sm"
+        tabIndex={-1}
+        aria-hidden="true"
+        className="absolute inset-0 cursor-zoom-out bg-primary/90 backdrop-blur-sm"
         onClick={onClose}
       />
 
       <button
+        ref={closeButtonRef}
         type="button"
-        aria-label="Zamknij"
+        aria-label="Zamknij podgląd"
         onClick={onClose}
-        className="absolute top-4 right-4 z-10 flex size-10 items-center justify-center rounded-full border border-white/15 bg-white/10 text-white transition-colors duration-200 ease-out hover:bg-white/20 focus-visible:ring-3 focus-visible:ring-white/40"
+        className={cn(navButtonClass, "top-4 right-4 sm:top-6 sm:right-6")}
       >
         <X className="size-5" aria-hidden="true" />
       </button>
@@ -206,7 +259,7 @@ function CertificateLightbox({
               event.stopPropagation();
               onPrevious();
             }}
-            className="absolute left-3 z-10 flex size-10 items-center justify-center rounded-full border border-white/15 bg-white/10 text-white transition-colors duration-200 ease-out hover:bg-white/20 focus-visible:ring-3 focus-visible:ring-white/40 sm:left-6 sm:size-11"
+            className={cn(navButtonClass, "left-3 sm:left-6")}
           >
             <ChevronLeft className="size-5" aria-hidden="true" />
           </button>
@@ -218,16 +271,22 @@ function CertificateLightbox({
               event.stopPropagation();
               onNext();
             }}
-            className="absolute right-3 z-10 flex size-10 items-center justify-center rounded-full border border-white/15 bg-white/10 text-white transition-colors duration-200 ease-out hover:bg-white/20 focus-visible:ring-3 focus-visible:ring-white/40 sm:right-6 sm:size-11"
+            className={cn(navButtonClass, "right-3 sm:right-6")}
           >
             <ChevronRight className="size-5" aria-hidden="true" />
           </button>
+
+          <p
+            aria-live="polite"
+            className="absolute bottom-4 left-1/2 z-10 -translate-x-1/2 rounded-full border border-white/15 bg-white/10 px-3 py-1 text-sm font-medium text-white tabular-nums backdrop-blur-sm sm:bottom-6"
+          >
+            {activeIndex + 1} / {images.length}
+          </p>
         </>
       ) : null}
 
       <motion.div
-        className="relative z-10 max-h-[min(88vh,900px)] w-full max-w-4xl"
-        onClick={(event) => event.stopPropagation()}
+        className="pointer-events-none relative z-[5] max-h-[min(84vh,900px)] w-full max-w-4xl"
         initial={prefersReducedMotion ? false : { opacity: 0, scale: 0.96, y: 12 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
         exit={prefersReducedMotion ? undefined : { opacity: 0, scale: 0.98, y: 8 }}
@@ -236,11 +295,11 @@ function CertificateLightbox({
         <Image
           key={image.src}
           src={image.src}
-          alt=""
+          alt={`Certyfikat ${activeIndex + 1} z ${images.length}`}
           width={1200}
           height={1600}
           sizes="(max-width: 768px) 100vw, 896px"
-          className="mx-auto max-h-[min(88vh,900px)] w-auto rounded-xl object-contain shadow-2xl"
+          className="pointer-events-auto mx-auto max-h-[min(84vh,900px)] w-auto rounded-xl object-contain shadow-2xl"
           priority
         />
       </motion.div>
@@ -344,7 +403,7 @@ function CertificateGallery({ images }: CertificateGalleryProps) {
   return (
     <div className="flex flex-col">
       {prefersReducedMotion ? (
-        <ul className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4 xl:grid-cols-4">
+        <ul className="grid grid-cols-2 gap-3 sm:gap-4 xl:grid-cols-4">
           {certificateStats.map((item) => (
             <li key={item.label}>
               <CertificateStatTile value={item.value} label={item.label} />
@@ -353,7 +412,7 @@ function CertificateGallery({ images }: CertificateGalleryProps) {
         </ul>
       ) : (
         <motion.ul
-          className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4 xl:grid-cols-4"
+          className="grid grid-cols-2 gap-3 sm:gap-4 xl:grid-cols-4"
           initial="hidden"
           whileInView="show"
           viewport={{ once: true, amount: 0.15, margin: "0px 0px -5% 0px" }}

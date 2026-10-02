@@ -17,7 +17,7 @@ function Certificates() {
       id="certyfikaty"
       aria-labelledby="certificates-heading"
       spacing="default"
-      className="scroll-mt-24 bg-secondary/20"
+      className="bg-secondary/20"
     >
       <Container>
         <MotionReveal className={sectionIntro}>

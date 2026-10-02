@@ -72,4 +72,31 @@ export const contactForm = {
       required: true,
     },
   },
+  consent: {
+    label:
+      "Wyrażam zgodę na przetwarzanie moich danych w celu odpowiedzi na wiadomość.",
+    linkLabel: "Polityka prywatności",
+    href: "/polityka-prywatnosci",
+  },
+  errors: {
+    name: "Podaj swoje imię.",
+    email: "Podaj poprawny adres e-mail.",
+    subject: "Wpisz temat wiadomości.",
+    message: "Napisz kilka słów o tym, w czym mogę pomóc.",
+    consent: "Zaznacz zgodę, abym mogła odpowiedzieć na wiadomość.",
+  },
+  status: {
+    sending: "Wysyłanie…",
+    success: {
+      title: "Dziękuję za wiadomość!",
+      text: "Odpowiadam zwykle w ciągu 24 godzin.",
+      again: "Wyślij kolejną wiadomość",
+    },
+    mailto: {
+      title: "Otwieram program pocztowy",
+      text: "Wiadomość jest gotowa do wysłania — wystarczy kliknąć „Wyślij” w swojej poczcie.",
+    },
+    error:
+      "Nie udało się wysłać wiadomości. Spróbuj ponownie lub napisz bezpośrednio na adres e-mail.",
+  },
 } as const;

@@ -21,7 +21,7 @@ const buttonVariants = cva(
           btnPrimaryHoverClass,
         ),
         secondary: cn(
-          "border-2 border-primary/15 bg-background text-primary",
+          "border-2 border-primary/25 bg-background/70 text-primary backdrop-blur-sm [&_svg]:transition-transform [&_svg]:duration-200",
           btnSecondaryHoverClass,
         ),
         ghost: "text-foreground hover:bg-muted aria-expanded:bg-muted",

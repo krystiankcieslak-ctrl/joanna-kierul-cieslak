@@ -14,6 +14,7 @@ import {
 } from "@/constants/layout";
 import type { OfferBlock } from "@/constants/offer";
 import { ctaLink } from "@/constants/navigation";
+import { requestContactPrefill } from "@/lib/contact-prefill";
 import type { OfferImage } from "@/lib/offer-images";
 import {
   motionDurationReveal,
@@ -135,7 +136,10 @@ function OfferItem({
 
       <p className={cn("max-w-xl", bodyText)}>{intro}</p>
 
-      <ul className="flex flex-col gap-2.5" aria-label={`Zakres: ${title}`}>
+      <ul
+        className="grid grid-cols-1 gap-2.5 sm:grid-cols-2 sm:gap-x-6 md:grid-cols-1 xl:grid-cols-2"
+        aria-label={`Zakres: ${title}`}
+      >
         {bullets.map((bullet) => (
           <li
             key={bullet}
@@ -152,6 +156,7 @@ function OfferItem({
       <div className="pt-1">
         <Link
           href={ctaLink.href}
+          onClick={() => requestContactPrefill(title)}
           className={cn(
             buttonVariants({ variant: "primary", size: "lg" }),
             "w-full sm:w-fit",
@@ -168,7 +173,7 @@ function OfferItem({
       id={`oferta-${id}`}
       aria-labelledby={headingId}
       className={cn(
-        "scroll-mt-24 overflow-hidden rounded-2xl border border-border/40 bg-card",
+        "scroll-mt-6 overflow-hidden rounded-2xl border border-border/40 bg-card",
         "shadow-[0_6px_32px_rgba(24,49,83,0.08)]",
       )}
     >

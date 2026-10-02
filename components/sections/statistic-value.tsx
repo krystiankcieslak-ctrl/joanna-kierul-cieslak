@@ -19,15 +19,23 @@ function StatisticValue({ value, label }: StatisticValueProps) {
   });
 
   return (
-    <Card className="h-full gap-0 p-4 sm:p-5">
+    <Card className="relative h-full gap-0 p-4 sm:p-5">
+      <span
+        aria-hidden="true"
+        className="absolute top-0 left-4 h-0.5 w-8 rounded-full bg-accent sm:left-5"
+      />
       <CardContent className="flex flex-col gap-1.5 p-0">
         <p
           ref={ref}
-          className="font-heading text-5xl font-bold tracking-tight text-primary tabular-nums sm:text-6xl"
+          aria-hidden="true"
+          className="font-heading text-4xl font-bold tracking-tight text-primary tabular-nums sm:text-5xl xl:text-6xl"
         >
           {display}
         </p>
-        <p className="text-xs leading-snug text-muted-foreground sm:text-sm">
+        <p
+          aria-hidden="true"
+          className="text-xs leading-snug text-muted-foreground sm:text-sm"
+        >
           {label}
         </p>
         <span className="sr-only">

@@ -1,6 +1,7 @@
 "use client";
 
-import { ChevronDown } from "lucide-react";
+import { ArrowRight, ChevronDown } from "lucide-react";
+import Link from "next/link";
 import { useReducedMotion } from "framer-motion";
 import { useId, useState } from "react";
 
@@ -10,7 +11,6 @@ import { Heading } from "@/components/ui/heading";
 import { Section } from "@/components/ui/section";
 import { sectionIntro, sectionSubtitle, cardSurface } from "@/constants/layout";
 import { faqHeading, faqItems, faqSubtitle } from "@/constants/faq";
-import { cardInteractiveClass } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 
 function FaqAccordionItem({
@@ -31,7 +31,12 @@ function FaqAccordionItem({
   const panelId = `${id}-panel`;
 
   return (
-    <div className="border-b border-border/40 last:border-b-0">
+    <div
+      className={cn(
+        "border-b border-border/40 transition-colors duration-300 last:border-b-0",
+        isOpen && "border-accent/30",
+      )}
+    >
       <h3>
         <button
           type="button"
@@ -104,7 +109,6 @@ function Faq() {
       id="faq"
       aria-labelledby="faq-heading"
       spacing="default"
-      className="scroll-mt-24"
     >
       <Container>
         <MotionReveal className={sectionIntro}>
@@ -119,7 +123,6 @@ function Faq() {
             className={cn(
               "mx-auto w-full max-w-3xl rounded-2xl bg-card px-4 shadow-(--shadow-card) sm:px-6 md:px-7",
               cardSurface,
-              cardInteractiveClass,
             )}
           >
             {faqItems.map((item) => (
@@ -137,6 +140,20 @@ function Faq() {
               />
             ))}
           </div>
+
+          <p className="mx-auto mt-6 flex max-w-3xl flex-wrap items-center justify-center gap-x-2 gap-y-1 text-center text-sm text-muted-foreground md:text-base">
+            Masz inne pytanie?
+            <Link
+              href="#kontakt"
+              className="group inline-flex items-center gap-1.5 rounded-sm font-medium text-primary underline decoration-accent/50 underline-offset-4 transition-colors hover:decoration-accent focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
+            >
+              Napisz do mnie
+              <ArrowRight
+                aria-hidden="true"
+                className="size-4 transition-transform duration-200 group-hover:translate-x-0.5"
+              />
+            </Link>
+          </p>
         </MotionReveal>
       </Container>
     </Section>

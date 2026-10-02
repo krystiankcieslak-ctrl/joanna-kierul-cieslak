@@ -4,7 +4,7 @@ export const sectionIntro =
   "mx-auto mb-8 max-w-2xl text-center md:mb-10";
 
 export const sectionSubtitle =
-  "mt-3 text-base leading-relaxed text-muted-foreground md:mt-4 md:text-lg";
+  "mt-3 text-base leading-relaxed text-pretty text-muted-foreground md:mt-4 md:text-lg";
 
 export const sectionStack = "mt-10 md:mt-12 lg:mt-14";
 
@@ -24,7 +24,7 @@ export const iconWrap =
 export const iconSize = "size-4";
 
 export const bodyText =
-  "text-base leading-relaxed text-muted-foreground md:text-lg md:leading-relaxed";
+  "text-base leading-relaxed text-pretty text-muted-foreground md:text-lg md:leading-relaxed";
 
 export const checkWrap =
   "mt-0.5 flex size-5 shrink-0 items-center justify-center rounded-full bg-accent/15";

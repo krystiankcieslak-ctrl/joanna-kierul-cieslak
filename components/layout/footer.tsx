@@ -1,19 +1,23 @@
+import { ArrowUp } from "lucide-react";
 import Link from "next/link";
 import type { ReactNode } from "react";
 
 import { Container } from "@/components/ui/container";
+import { LogoMark } from "@/components/ui/logo-mark";
 import { audienceGroups } from "@/constants/audience";
 import { contactDetails } from "@/constants/contact";
 import { bodyText } from "@/constants/layout";
 import { cn } from "@/lib/utils";
 
+/** Linki z „/” działają także z podstrony (np. polityki prywatności). */
 const footerNavLinks = [
-  { label: "Hero", href: "#hero" },
-  { label: "Oferta", href: "#oferta" },
-  { label: "O mnie", href: "#o-mnie" },
-  { label: "Opinie", href: "#opinie" },
-  { label: "Kontakt", href: "#kontakt" },
-  { label: "FAQ", href: "#faq" },
+  { label: "Start", href: "/#hero" },
+  { label: "Oferta", href: "/#oferta" },
+  { label: "O mnie", href: "/#o-mnie" },
+  { label: "Certyfikaty", href: "/#certyfikaty" },
+  { label: "Opinie", href: "/#opinie" },
+  { label: "FAQ", href: "/#faq" },
+  { label: "Kontakt", href: "/#kontakt" },
 ] as const;
 
 const offerLinkLabels: Record<(typeof audienceGroups)[number]["id"], string> = {
@@ -35,14 +39,21 @@ function FooterColumn({
   title,
   children,
   className,
+  hideTitle = false,
 }: {
   title: string;
   children: ReactNode;
   className?: string;
+  hideTitle?: boolean;
 }) {
   return (
     <div className={cn("flex flex-col gap-4", className)}>
-      <h2 className="font-heading text-sm font-semibold tracking-tight text-foreground">
+      <h2
+        className={cn(
+          "font-heading text-sm font-semibold tracking-tight text-foreground",
+          hideTitle && "sr-only",
+        )}
+      >
         {title}
       </h2>
       {children}
@@ -57,18 +68,17 @@ function Footer() {
     <footer className="border-t border-border/40 bg-secondary/30">
       <Container className="py-10 md:py-12 lg:py-14">
         <div className="grid grid-cols-1 gap-8 text-center sm:grid-cols-2 sm:text-left lg:grid-cols-4 lg:gap-6 xl:gap-8">
-          <FooterColumn title="Joanna Kierul-Cieślak" className="sm:col-span-2 lg:col-span-1">
+          <FooterColumn
+            title="Joanna Kierul-Cieślak"
+            hideTitle
+            className="sm:col-span-2 lg:col-span-1"
+          >
             <Link
               href="/"
               className="mx-auto inline-flex items-center gap-2.5 sm:mx-0"
               aria-label="Joanna Kierul-Cieślak — strona główna"
             >
-              <span
-                aria-hidden="true"
-                className="flex size-10 items-center justify-center rounded-xl bg-primary text-sm font-bold tracking-wide text-primary-foreground"
-              >
-                JKC
-              </span>
+              <LogoMark />
               <span className="font-semibold tracking-tight text-foreground">
                 Joanna Kierul-Cieślak
               </span>
@@ -95,7 +105,7 @@ function Footer() {
             <ul className="flex flex-col gap-2.5">
               {audienceGroups.map((group) => (
                 <li key={group.id}>
-                  <Link href={group.href} className={footerLinkClass}>
+                  <Link href={`/${group.href}`} className={footerLinkClass}>
                     {offerLinkLabels[group.id]}
                   </Link>
                 </li>
@@ -127,11 +137,21 @@ function Footer() {
             © {year} Joanna Kierul-Cieślak. Wszelkie prawa zastrzeżone.
           </p>
           <div className="flex flex-wrap items-center justify-center gap-4 sm:justify-end">
-            <Link href="#" className={footerLinkClass}>
+            <Link href="/polityka-prywatnosci" className={footerLinkClass}>
               Polityka prywatności
             </Link>
-            <Link href="#" className={footerLinkClass}>
-              Ustawienia cookies
+            <Link href="/polityka-prywatnosci#cookies" className={footerLinkClass}>
+              Pliki cookies
+            </Link>
+            <Link
+              href="/#hero"
+              aria-label="Wróć na górę strony"
+              className={cn(
+                footerLinkClass,
+                "inline-flex size-9 items-center justify-center rounded-full border border-border bg-card text-primary shadow-(--shadow-card) hover:border-accent/40",
+              )}
+            >
+              <ArrowUp aria-hidden="true" className="size-4" />
             </Link>
           </div>
         </div>

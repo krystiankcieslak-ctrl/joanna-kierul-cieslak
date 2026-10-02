@@ -9,6 +9,7 @@ export * from "./hero";
 export * from "./layout";
 export * from "./navigation";
 export * from "./offer";
+export * from "./site";
 export * from "./statistics";
 export * from "./testimonials";
 export * from "./tokens";

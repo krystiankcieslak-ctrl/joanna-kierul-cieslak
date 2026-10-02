@@ -25,9 +25,13 @@ function Audience() {
         </MotionReveal>
 
         <MotionReveal>
-          <ul className="grid grid-cols-1 gap-3 sm:gap-4 md:grid-cols-2 lg:grid-cols-3">
+          {/* flex-wrap + justify-center: ostatni rząd (2 z 5 kart) jest wyśrodkowany, bez „dziury”. */}
+          <ul className="flex flex-wrap justify-center gap-4">
             {audienceGroups.map((group) => (
-              <li key={group.id} className="h-full">
+              <li
+                key={group.id}
+                className="w-full md:w-[calc((100%-1rem)/2)] lg:w-[calc((100%-2rem)/3)]"
+              >
                 <AudienceCard
                   id={group.id}
                   title={group.title}

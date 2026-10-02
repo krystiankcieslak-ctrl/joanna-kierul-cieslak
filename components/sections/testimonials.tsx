@@ -62,7 +62,6 @@ function Testimonials() {
       id="opinie"
       aria-labelledby="testimonials-heading"
       spacing="default"
-      className="scroll-mt-24"
     >
       <Container>
         <MotionReveal className={sectionIntro}>
@@ -151,8 +150,8 @@ function Testimonials() {
           <div
             aria-label="Kluczowe wskaźniki zaufania"
             className={cn(
-              "grid grid-cols-1 gap-4 rounded-2xl bg-secondary/30 px-5 py-6",
-              "sm:grid-cols-2 lg:grid-cols-4 lg:gap-6 lg:px-6 lg:py-7",
+              "grid grid-cols-2 gap-x-4 gap-y-6 rounded-2xl bg-secondary/30 px-5 py-6",
+              "lg:grid-cols-4 lg:gap-6 lg:px-6 lg:py-7",
             )}
           >
             {testimonialTrustMetrics.map((metric) => (

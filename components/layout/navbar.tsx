@@ -1,12 +1,19 @@
 "use client";
 
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import {
+  AnimatePresence,
+  motion,
+  useReducedMotion,
+  useScroll,
+  useSpring,
+} from "framer-motion";
 import { Menu, X } from "lucide-react";
 import Link from "next/link";
 import { useCallback, useEffect, useId, useState } from "react";
 
 import { Button, buttonVariants } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
+import { LogoMark } from "@/components/ui/logo-mark";
 import { ctaLink, mobileNavLinks, navLinks } from "@/constants/navigation";
 import { navLinkActiveClass, navLinkClass } from "@/lib/motion";
 import { cn } from "@/lib/utils";
@@ -17,6 +24,12 @@ function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [activeHref, setActiveHref] = useState<string | null>(null);
+  const { scrollYProgress } = useScroll();
+  const progress = useSpring(scrollYProgress, {
+    stiffness: 140,
+    damping: 30,
+    restDelta: 0.001,
+  });
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 16);
@@ -64,6 +77,26 @@ function Navbar() {
     return () => observer.disconnect();
   }, []);
 
+  useEffect(() => {
+    if (!mobileOpen) return;
+
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setMobileOpen(false);
+    };
+    const desktopQuery = window.matchMedia("(min-width: 1024px)");
+    const onDesktop = (event: MediaQueryListEvent) => {
+      if (event.matches) setMobileOpen(false);
+    };
+
+    window.addEventListener("keydown", onKeyDown);
+    desktopQuery.addEventListener("change", onDesktop);
+
+    return () => {
+      window.removeEventListener("keydown", onKeyDown);
+      desktopQuery.removeEventListener("change", onDesktop);
+    };
+  }, [mobileOpen]);
+
   const closeMobile = useCallback(() => setMobileOpen(false), []);
 
   return (
@@ -71,7 +104,7 @@ function Navbar() {
       className={cn(
         "sticky top-0 z-50 transition-[background-color,box-shadow,border-color] duration-[250ms] ease-out",
         scrolled
-          ? "border-b border-border/60 bg-background/95 shadow-sm backdrop-blur-md supports-[backdrop-filter]:bg-background/90"
+          ? "border-b border-border/60 bg-background/95 shadow-[0_1px_12px_rgba(24,49,83,0.06)] backdrop-blur-xl backdrop-saturate-150 supports-[backdrop-filter]:bg-background/85"
           : "border-b border-transparent bg-transparent",
       )}
     >
@@ -85,12 +118,7 @@ function Navbar() {
             className="flex min-w-0 items-center gap-2.5 rounded-lg text-primary outline-none focus-visible:ring-3 focus-visible:ring-ring/50 sm:gap-3"
             aria-label="Joanna Kierul-Cieślak — strona główna"
           >
-            <span
-              aria-hidden="true"
-              className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-primary text-base font-bold tracking-wide text-primary-foreground sm:size-10 sm:text-sm"
-            >
-              JKC
-            </span>
+            <LogoMark className="size-11 sm:size-10" />
             <span className="truncate font-semibold tracking-tight text-foreground sm:inline">
               Joanna Kierul-Cieślak
             </span>
@@ -184,6 +212,16 @@ function Navbar() {
           </motion.div>
         ) : null}
       </AnimatePresence>
+
+      {/* Pasek postępu czytania — cienka złota linia pod menu. */}
+      <motion.div
+        aria-hidden="true"
+        className={cn(
+          "absolute inset-x-0 bottom-0 h-0.5 origin-left bg-linear-to-r from-accent/70 to-accent transition-opacity duration-300",
+          scrolled && !prefersReducedMotion ? "opacity-100" : "opacity-0",
+        )}
+        style={{ scaleX: progress }}
+      />
     </header>
   );
 }
