@@ -92,6 +92,9 @@ function FieldError({ id, message }: { id: string; message?: string }) {
 
 const emailDetail = contactDetails.find((item) => item.id === "email");
 
+// Web3Forms: publiczny klucz formularza (przeznaczony do użycia w przeglądarce).
+const web3formsAccessKey = process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY ?? "";
+
 function ContactForm() {
   const subjectRef = useRef<HTMLInputElement>(null);
   const prefilledSubject = useRef<string | null>(null);
@@ -142,8 +145,8 @@ function ContactForm() {
       message: String(data.get("message")).trim(),
     };
 
-    // Brak skonfigurowanej usługi → gotowa wiadomość w programie pocztowym.
-    if (!siteConfig.contactFormEndpoint) {
+    // Brak adresu usługi lub klucza Web3Forms → gotowa wiadomość w programie pocztowym.
+    if (!siteConfig.contactFormEndpoint || !web3formsAccessKey) {
       if (!emailDetail) return;
       const signature = [payload.name, payload.email, payload.phone]
         .filter(Boolean)
@@ -165,7 +168,7 @@ function ContactForm() {
           "Content-Type": "application/json",
           Accept: "application/json",
         },
-        body: JSON.stringify({ ...payload, _subject: payload.subject }),
+        body: JSON.stringify({ access_key: web3formsAccessKey, ...payload }),
       });
 
       if (!response.ok) throw new Error(`HTTP ${response.status}`);
